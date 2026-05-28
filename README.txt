@@ -2,27 +2,13 @@
 
 Сквозной ETL-пайплайн для анализа рынка вакансий: сбор данных из нескольких источников, трансформация, загрузка в Greenplum DWH, построение витрин и визуализация в Grafana через ClickHouse.
 
-## Архитектура:
+## Data flow:
 
-
-TheirStack API, hh_data.xlsx    
-▼ ▼               
-
-MinIO (S3)
-raw data lake              
-
- ▼
-
-Greenplum (DWH) 
-staging.vacancies_raw → core.* → marts.*              
-
-       ▼
-
-ClickHouse (OLAP)
-    facts.*                
-
-       ▼
-Grafana (Dashboards) 
+1. TheirStack API, hh_data.xlsx      
+2. MinIO (S3) raw data lake 
+3. Greenplum (DWH) staging.vacancies_raw → core.* → marts.* 
+4. ClickHouse (OLAP) facts.*
+5. Grafana (Dashboards) 
 
 
 
@@ -39,8 +25,8 @@ Grafana (Dashboards)
 
 ## Структура проекта
 
-job-market-etl/
-  airflow/                             # Airflow DAG'и, логи, плагины
+job-market-etl/ /n
+  airflow/                             # Airflow DAG'и, логи, плагины \n
     dags/                              # DAG-файлы
       theirstack_extraction_dag.py     # Выгрузка из TheirStack API
       synthetic_hh_dag.py              # Загрузка синтетических данных hh.ru (hh ограничил доступ к вакансиям через api :c )
