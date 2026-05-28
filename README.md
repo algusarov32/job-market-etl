@@ -22,15 +22,16 @@
 └─────────────────────┬───────────────────────────┘
                       │
                       ▼
-┌─────────────────────────────────────────────────┐
-│                ClickHouse (OLAP)                │
-│                   facts.*                       │
-└─────────────────────┬───────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────┐
-│             Grafana (Dashboards)                │
-└─────────────────────────────────────────────────┘
+
+ClickHouse (OLAP)
+    facts.*  
+       ┬
+       │
+       ▼
+
+Grafana (Dashboards) 
+
+
 
 ## Стек технологий
 
@@ -46,38 +47,38 @@
 ## Структура проекта
 
 job-market-etl/
-├── airflow/                           # Airflow DAG'и, логи, плагины
-│ └── dags/                            # DAG-файлы
-│ ├── theirstack_extraction_dag.py     # Выгрузка из TheirStack API
-│ ├── synthetic_hh_dag.py              # Загрузка синтетических данных hh.ru (hh ограничил доступ к вакансиям через api :c )
-│ ├── gp_transform_dag.py              # Трансформация staging → core
-│ ├── gp_build_marts_dag.py            # Построение витрин
-│ ├── load_clickhouse_dag.py           # Загрузка в ClickHouse
-│ └── trigger_transform_sensor.py      # Сенсор для координации DAG'ов
-├── src/
-│ ├── extractors/                      # Экстракторы данных из API 
-│ │ ├── theirstack_extractor.py
-│ │ └── base_extractor.py
-│ ├── loaders/                         # Загрузчики данных
-│ │ ├── base_loader.py
-│ │ ├── s3_loader.py
-│ │ ├── gp_loader.py
-│ │ └── ch_loader.py
-│ ├── transformers/                    # Трансформация данных
-│ │ └── excel_to_hh.py
-│ └── utils/                           # Вспомогательные модули
-│ ├── config.py
-│ ├── gp_connection.py
-│ └── ch_connection.py
-├── scripts/                           # SQL-скрипты
-│ ├── create_tables.sql                # DDL таблиц
-│ ├── gp_transform_vacancies_raw.sql   # Трансформация staging → core
-│ ├── gp_rebuild_marts.sql             # Перестроение витрин
-│ └── init_clickhouse.sql              # Инициализация ClickHouse
-├── Dockerfile.airflow                 # Кастомный образ Airflow
-├── docker-compose.yml                 # Конфигурация сервисов
-├── .env                               # Переменные окружения
-└── generate_synthetic_hh.py           # Генератор синтетических данных
+  airflow/                             # Airflow DAG'и, логи, плагины
+    dags/                              # DAG-файлы
+      theirstack_extraction_dag.py     # Выгрузка из TheirStack API
+      synthetic_hh_dag.py              # Загрузка синтетических данных hh.ru (hh ограничил доступ к вакансиям через api :c )
+      gp_transform_dag.py              # Трансформация staging → core
+      gp_build_marts_dag.py            # Построение витрин
+      load_clickhouse_dag.py           # Загрузка в ClickHouse
+      trigger_transform_sensor.py      # Сенсор для координации DAG'ов
+    src/
+      extractors/                      # Экстракторы данных из API 
+        theirstack_extractor.py
+        base_extractor.py
+      loaders/                         # Загрузчики данных
+        base_loader.py
+        s3_loader.py
+        gp_loader.py
+        ch_loader.py
+      transformers/                    # Трансформация данных
+        excel_to_hh.py
+      utils/                           # Вспомогательные модули
+        config.py
+        gp_connection.py
+        ch_connection.py
+    scripts/                           # SQL-скрипты
+      create_tables.sql                # DDL таблиц
+      gp_transform_vacancies_raw.sql   # Трансформация staging → core
+      gp_rebuild_marts.sql             # Перестроение витрин
+      init_clickhouse.sql              # Инициализация ClickHouse
+  Dockerfile.airflow                   # Кастомный образ Airflow
+  docker-compose.yml                   # Конфигурация сервисов
+  .env                                 # Переменные окружения
+  generate_synthetic_hh.py             # Генератор синтетических данных
 
 
 ## Быстрый старт
