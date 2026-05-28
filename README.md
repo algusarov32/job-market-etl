@@ -9,15 +9,18 @@ TheirStack API, hh_data.xlsx
 ▼ ▼               
 
 MinIO (S3)
-raw data lake
+raw data lake              
+
  ▼
 
 Greenplum (DWH) 
-staging.vacancies_raw → core.* → marts.*
+staging.vacancies_raw → core.* → marts.*              
+
        ▼
 
 ClickHouse (OLAP)
-    facts.*  
+    facts.*                
+
        ▼
 Grafana (Dashboards) 
 
