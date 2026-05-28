@@ -1,0 +1,11 @@
+FROM apache/airflow:2.8.1-python3.10
+
+ENV PYTHONPATH="/opt/airflow"
+
+USER airflow
+
+RUN pip install \
+    clickhouse-driver==0.2.6 \
+    python-dotenv==1.0.1 \
+    pandas==2.1.4 \
+    openpyxl==3.1.2
