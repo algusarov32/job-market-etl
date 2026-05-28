@@ -4,31 +4,21 @@
 
 ## Архитектура:
 
-┌─────────────┐ ┌─────────────┐ 
-│ TheirStack  │ │   hh.ru     │ 
-│ API         │ │(hh_data.xlsx│ 
-└──────┬──────┘ └──────┬──────┘ 
-       │               │               
-       ▼               ▼               
-┌─────────────────────────────────────────────────┐
-│                   MinIO (S3)                    │
-│                 raw data lake                   │
-└─────────────────────┬───────────────────────────┘
-                      │
-                      ▼
-┌─────────────────────────────────────────────────┐
-│                 Greenplum (DWH)                 │
-│     staging.vacancies_raw → core.* → marts.*    │
-└─────────────────────┬───────────────────────────┘
-                      │
-                      ▼
+
+TheirStack API, hh_data.xlsx    
+▼ ▼               
+
+MinIO (S3)
+raw data lake
+ ▼
+
+Greenplum (DWH) 
+staging.vacancies_raw → core.* → marts.*
+       ▼
 
 ClickHouse (OLAP)
     facts.*  
-       ┬
-       │
        ▼
-
 Grafana (Dashboards) 
 
 
